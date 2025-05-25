@@ -161,17 +161,17 @@ def scrape_trendyol(search_term="kulaklik"):
 
 
 if __name__ == "__main__":
-    search_term = "kulaklik"
+    search_term = input('What do you want to search for: ')
     
-    service = input("Choose your service: hepsiburada or trendyol: ")
+    service = input("Choose your service: hepsiburada or trendyol: ").lower()
     
     products = None
 
     if service == "hepsiburada":
-        print("Hepsiburada'dan veri çekiliyor...")
+        print("Scraping from Hepsiburada ...")
         products = scrape_hepsiburada(search_term)
     elif service == "trendyol":
-        print("Trendyol'dan veri çekiliyor...")
+        print("Scraping from Trendyol...")
         products = scrape_trendyol(search_term)
     else:
         print("Service is not found!")
@@ -182,8 +182,8 @@ if __name__ == "__main__":
     df = pd.DataFrame(products)
     df.to_csv('products.csv', index=False, encoding='utf-8-sig', sep=";")
 
-    print("\n💰 En Ucuz 5 Ürün:")
+    print("\n💰 Top 5 Cheapest Products:")
     print(df.sort_values("Fiyat (TL)").head(5))
 
-    print("\n💸 En Pahalı 5 Ürün:")
+    print("\n💸 Top 5 most expensive products:")
     print(df.sort_values("Fiyat (TL)", ascending=False).head(5))
